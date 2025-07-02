@@ -1,12 +1,24 @@
-import {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
-        ref.current = value
+        ref.current = value;
     }, [value]);
-    return ref.current
+    return ref.current;
 }
 
-function SomeComponent() {
+export default function SomeComponent() {
+    const [counter, setCounter] = useState(0);
+    const previousCounter = usePrevious(counter);
+
+    function handleClick() {
+        setCounter((prev) => prev + 1);
+    }
+
+    return (
+        <button onClick={handleClick}>
+            counter: {counter}, previousCounter: {previousCounter}
+        </button>
+    );
 }
